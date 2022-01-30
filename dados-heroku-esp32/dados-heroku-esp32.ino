@@ -74,8 +74,6 @@ void loop(void)
   if (WiFi.status() == WL_CONNECTED) {
     http.begin(client, serverName);
 
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
     http.addHeader("Content-Type", "application/json");
     String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(uvIntensity) + " }";
     int httpResponseCode = http.POST(body);
