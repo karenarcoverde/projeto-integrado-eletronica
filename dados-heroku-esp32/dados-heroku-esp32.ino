@@ -77,7 +77,7 @@ void loop(void)
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     http.addHeader("Content-Type", "application/json");
-    String body = "{\"voltage\": \""+ String(loadvoltage) + "\" ,\"uv\": \""+ String(uvIntensity)+ "\" }";
+    String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(uvIntensity) + " }";
     int httpResponseCode = http.POST(body);
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
