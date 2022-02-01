@@ -71,12 +71,12 @@ void loop(void)
   float UV = light.getUV();
   float DUV = light.estimateDUVindex(UV); // 0 a 15
 
-  Serial.print("\tmW cm^2");
-  Serial.print("\tDUV index");
+  Serial.print("mW/cm^2");
+  Serial.print("\t\t DUV index");
   Serial.println();
   
   Serial.print(UV, 4);
-  Serial.print("\t");
+  Serial.print("\t\t ");
   Serial.print(DUV, 1);
   Serial.println();
   
@@ -102,8 +102,10 @@ void loop(void)
     risco = "extremo";
   }
 
-  Serial.println("risco: ");
+  
+  Serial.print("risco: ");
   Serial.println(risco);
+  
 
   delay(1000);
   
