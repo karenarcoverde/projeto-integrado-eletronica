@@ -11,7 +11,6 @@ const char *serverName = "http://svuv-api.herokuapp.com/data_read/load";
 int UVOUT = 36;   /* Pino D36 do ESP32 conetado ao Out do sensor UV*/
 int REF   = 34;   /* Pino D34 do ESP32 conectado ao EN do sensor UV */
 
-
 ML8511 light(UVOUT, REF);
 
 WiFiClient client;
@@ -101,12 +100,10 @@ void loop(void)
   {
     risco = "extremo";
   }
-
   
   Serial.print("risco: ");
   Serial.println(risco);
   
-
   delay(1000);
   
   if (WiFi.status() == WL_CONNECTED) {
