@@ -9,6 +9,8 @@ const char *serverName = "http://svuv-api.herokuapp.com/data_read/load";
 
 int UVOUT = 36;   /* Pino D36 do ESP32 conetado ao Out do sensor UV*/
 int REF   = 34;   /* Pino D34 do ESP32 conectado ao EN do sensor UV */
+String UV_index = "0";
+String risco = "0";
 
 WiFiClient client;
 HTTPClient http;
@@ -58,24 +60,89 @@ void loop(void)
   int refLevel = averageAnalogRead(REF);            /* Armazena a leitura analógica do pino EN */
   /* Use 3.3V como referencia no calculo de tensão */
   float outputVoltage = 3.3 / refLevel * uvLevel; /* Indica a tensão de saída do sensor */
-  float uvIntensity = mapfloat(outputVoltage, 0.99, 2.9, 0.0, 15.0); /* Intensidade raios UV */
+  float uvIntensity = mapfloat(outputVoltage, 0.99, 2.8, 0.0, 15.0); /* Intensidade raios UV */
+
+  int tensao = map(uvLevel, 0, refLevel, 0, 1023);
   
-  Serial.println(uvLevel);
-  Serial.println(refLevel);
-  Serial.print(" Intensidade UV: ");
-  Serial.println(uvIntensity);
-  int onda = map(uvLevel, 0, refLevel, 0, 1023);
+  //Compara com valores tabela UV_Index
+  if (tensao > 0 && tensao < 50)
+  {
+    UV_index = "0";
+    risco = "baixo";
+  }
+  else if (tensao > 50 && tensao <= 227)
+  {
+    UV_index = "0";
+    risco = "baixo";
+  }
+  else if (tensao > 227 && tensao <= 318)
+  {
+    UV_index = "1";
+    risco = "baixo";
+  }
+  else if (tensao > 318 && tensao <= 408)
+  {
+    UV_index = "2";
+    risco = "baixo";
+  }
+  else if (tensao > 408 && tensao <= 503)
+  {
+    UV_index = "3";
+    risco = "moderado";
+  }
+  else if (tensao > 503 && tensao <= 606)
+  {
+    UV_index = "4";
+    risco = "moderado";
+  }
+  else if (tensao > 606 && tensao <= 696)
+  {
+    UV_index = "5";
+    risco = "moderado";
+  }
+  else if (tensao > 696 && tensao <= 795)
+  {
+    UV_index = "6";
+    risco = "alto";
+  }
+  else if (tensao > 795 && tensao <= 881)
+  {
+    UV_index = "7";
+    risco = "alto";
+  }
+  else if (tensao > 881 && tensao <= 976)
+  {
+    UV_index = "8";
+    risco = "muito alto";
+  }
+  else if (tensao > 976 && tensao <= 1079)
+  {
+    UV_index = "9";
+    risco = "muito alto";
+  }
+  else if (tensao > 1079 && tensao <= 1170)
+  {
+    UV_index = "10";
+    risco = "muito alto";
+  }
+  else if (tensao > 1170)
+  {
+    UV_index = "11";
+    risco = "extremo";
+  }
+
   Serial.print("Classificacao: ");
-  Serial.println (onda);
+  Serial.println (tensao);
+  Serial.println(UV_index);
+  Serial.println(risco);
   Serial.println(); 
   delay(200);
-
  
   if (WiFi.status() == WL_CONNECTED) {
     http.begin(client, serverName);
 
     http.addHeader("Content-Type", "application/json");
-    String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(uvIntensity) + " }";
+    String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(UV_index) + ", \"risco\": "+ String(risco) + "}";
     int httpResponseCode = http.POST(body);
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
