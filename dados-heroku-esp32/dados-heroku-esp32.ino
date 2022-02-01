@@ -33,10 +33,6 @@ void setup(void)
 
   light.setDUVfactor(1.61);    // calibrate your sensor - default 1.61
 
-  Serial.print("\tmW cm^2");
-  Serial.print("\tDUV index");
-  Serial.println();
-  
   while (!Serial) {
     delay(1);
   }
@@ -75,6 +71,10 @@ void loop(void)
   float UV = light.getUV();
   float DUV = light.estimateDUVindex(UV); // 0 a 15
 
+  Serial.print("\tmW cm^2");
+  Serial.print("\tDUV index");
+  Serial.println();
+  
   Serial.print(UV, 4);
   Serial.print("\t");
   Serial.print(DUV, 1);
