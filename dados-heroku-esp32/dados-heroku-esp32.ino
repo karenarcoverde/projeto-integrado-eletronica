@@ -110,7 +110,7 @@ void loop(void)
     http.begin(client, serverName);
 
     http.addHeader("Content-Type", "application/json");
-    String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(DUV) + ", \"risco\": "+ String(risco) + "}";
+    String body = "{\"voltage\": "+ String(loadvoltage) + " ,\"uv\": "+ String(DUV) + ", \"risco\": \""+ String(risco) + "\" }";
     int httpResponseCode = http.POST(body);
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
