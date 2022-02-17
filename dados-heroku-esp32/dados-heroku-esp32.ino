@@ -4,8 +4,8 @@
 #include <Adafruit_INA219.h>
 #include <ML8511.h>
 
-const char *ssid = "SATURNO";
-const char *password = "erickkaren";
+const char *ssid = ""; //colocar nome do wifi
+const char *password = ""; //colocar senha do wifi
 const char *serverName = "http://svuv-api.herokuapp.com/data_read/load";
 
 int UVOUT = 36;   /* Pino D36 do ESP32 conetado ao Out do sensor UV*/
