@@ -3,10 +3,10 @@
 #include <HTTPClient.h>
 #include <Adafruit_INA219.h>
 
-const char *ssid = "SATURNO";
-const char *password = "erickkaren";
+const char *ssid = ""; //colocar nome do wifi
+const char *password = ""; //colocar senha do wifi
 //const char *serverName = "http://192.168.0.21:1880/controleBateria";
-//const char *serverName = "http://177.65.22.167:8080/diego";
+
 const char *serverName = "http://svuv-api.herokuapp.com/data_read/load";
 
 int UVOUT = 36;   /* Pino D36 do ESP32 conetado ao Out do sensor */
